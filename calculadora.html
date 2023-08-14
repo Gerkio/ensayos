@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculadora Científica</title>
+    <style>
+        /* Estilos para la calculadora */
+        .calculadora {
+            width: 380px;
+            margin: 0 auto;
+            background-color: #1A1A1A;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+            display: inline-block;
+        }
+
+        /* Estilos para los botones */
+        .boton {
+            width: 60px;
+            height: 60px;
+            background-color: #333333;
+            color: #FFFFFF;
+            border: 1px solid #777777;
+            text-align: center;
+            display: inline-block;
+            font-size: 18px;
+            margin: 2px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+
+        .boton:hover {
+            background-color: #444444;
+            transform: scale(1.05);
+        }
+
+        /* Estilos para la pantalla */
+        .pantalla {
+            background-color: #222222;
+            color: #FFFFFF;
+            padding: 10px;
+            text-align: right;
+            border-radius: 5px;
+            font-size: 28px;
+            box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
+            margin-bottom: 15px;
+        }
+
+        /* Estilos para los botones de operación */
+        .operacion {
+            background-color: #F39C12;
+            border: 1px solid #F1C40F;
+            color: #FFFFFF;
+        }
+
+        /* Estilos para el botón igual */
+        .igual {
+            background-color: #3498DB;
+            border: 1px solid #2980B9;
+            color: #FFFFFF;
+        }
+
+        /* Estilos para la marca de la calculadora */
+        .marca {
+            text-align: right;
+            font-size: 18px;
+            color: #777777;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculadora">
+        <div class="pantalla" id="pantalla">0</div>
+        <div>
+            <button class="boton" onclick="agregarNumero('7')">7</button>
+            <button class="boton" onclick="agregarNumero('8')">8</button>
+            <button class="boton" onclick="agregarNumero('9')">9</button>
+            <button class="boton" onclick="operacion('+')">+</button>
+        </div>
+        <div>
+            <button class="boton" onclick="agregarNumero('4')">4</button>
+            <button class="boton" onclick="agregarNumero('5')">5</button>
+            <button class="boton" onclick="agregarNumero('6')">6</button>
+            <button class="boton" onclick="operacion('-')">-</button>
+        </div>
+        <div>
+            <button class="boton" onclick="agregarNumero('1')">1</button>
+            <button class="boton" onclick="agregarNumero('2')">2</button>
+            <button class="boton" onclick="agregarNumero('3')">3</button>
+            <button class="boton" onclick="operacion('*')">*</button>
+        </div>
+        <div>
+            <button class="boton" onclick="agregarNumero('0')">0</button>
+            <button class="boton" onclick="limpiarPantalla()">C</button>
+            <button class="boton" onclick="calcular()">=</button>
+            <button class="boton" onclick="operacion('/')">/</button>
+        </div>
+        <div class="marca">
+            GRK
+        </div>
+    </div>
+    <script>
+        let operando1 = '';
+        let operando2 = '';
+        let operador = '';
+        let pantalla = document.getElementById('pantalla');
+
+        function agregarNumero(numero) {
+            if (operador === '') {
+                operando1 += numero;
+                pantalla.innerText = operando1;
+            } else {
+                operando2 += numero;
+                pantalla.innerText = operando2;
+            }
+        }
+
+        function operacion(op) {
+            if (operando1 !== '' && operando2 === '') {
+                operador = op;
+            }
+        }
+
+        function calcular() {
+            if (operando1 !== '' && operando2 !== '' && operador !== '') {
+                const num1 = parseFloat(operando1);
+                const num2 = parseFloat(operando2);
+                let resultado = 0;
+
+                switch (operador) {
+                    case '+':
+                        resultado = num1 + num2;
+                        break;
+                    case '-':
+                        resultado = num1 - num2;
+                        break;
+                    case '*':
+                        resultado = num1 * num2;
+                        break;
+                    case '/':
+                        resultado = num1 / num2;
+                        break;
+                }
+
+                pantalla.innerText = resultado;
+                operando1 = resultado.toString();
+                operando2 = '';
+                operador = '';
+            }
+        }
+
+        function limpiarPantalla() {
+            pantalla.innerText = '0';
+            operando1 = '';
+            operando2 = '';
+            operador = '';
+        }
+
+    </script>
+</body>
+</html>
